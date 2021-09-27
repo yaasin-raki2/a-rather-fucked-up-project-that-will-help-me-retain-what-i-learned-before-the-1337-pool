@@ -1,30 +1,34 @@
-import React from "react";
+import React, { FC } from "react";
 import { Text, Image, View } from "react-native";
 
 import { styles } from "./styles";
+import ChatRoomModel from "../../models/ChatRoomModel";
 
-const ChatRoomItem = () => {
+interface IProps {
+    chatRoom: ChatRoomModel;
+}
+
+const ChatRoomItem: FC<IProps> = ({ chatRoom }) => {
+    const user = chatRoom.users[1];
+
     return (
         <View style={styles.container}>
             <View>
-                <Image
-                    source={{
-                        uri: "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/elon.png",
-                    }}
-                    style={styles.image}
-                />
-                <View style={styles.badgeContainer}>
-                    <Text style={styles.badgeText}>5</Text>
-                </View>
+                <Image source={{ uri: user.imageUri }} style={styles.image} />
+                {chatRoom.newMessages != 0 && (
+                    <View style={styles.badgeContainer}>
+                        <Text style={styles.badgeText}>{chatRoom.newMessages}</Text>
+                    </View>
+                )}
             </View>
             <View style={styles.rightContainer}>
                 <View style={styles.row}>
-                    <Text style={styles.name}>Elon Musk</Text>
-                    <Text style={styles.text}>11:11 AM</Text>
+                    <Text style={styles.name}>{user.name}</Text>
+                    <Text style={styles.text}>{chatRoom.lastMessage.createdAt}</Text>
                 </View>
                 <View>
                     <Text numberOfLines={1} style={styles.text}>
-                        uityzdfoqslic ki yfvol jef eou ylyhvuoyhrfdbrf ou
+                        {chatRoom.lastMessage.content}
                     </Text>
                 </View>
             </View>
