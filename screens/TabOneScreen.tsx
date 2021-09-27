@@ -5,12 +5,17 @@ import { Text, Image, View, StyleSheet } from "react-native";
 export default function TabOneScreen() {
     return (
         <View style={styles.container}>
-            <Image
-                source={{
-                    uri: "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/elon.png",
-                }}
-                style={styles.image}
-            />
+            <View>
+                <Image
+                    source={{
+                        uri: "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/elon.png",
+                    }}
+                    style={styles.image}
+                />
+                <View style={styles.badgeContainer}>
+                    <Text style={styles.badgeText}>5</Text>
+                </View>
+            </View>
             <View style={styles.rightContainer}>
                 <View style={styles.row}>
                     <Text style={styles.name}>Elon Musk</Text>
@@ -36,6 +41,22 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 30,
         marginRight: 10,
+    },
+    badgeContainer: {
+        backgroundColor: "#3777F0",
+        height: 20,
+        width: 20,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        right: 5,
+        borderWidth: 1,
+        borderColor: "#fff",
+    },
+    badgeText: {
+        color: "white",
+        fontSize: 12,
     },
     rightContainer: {
         flex: 1,
