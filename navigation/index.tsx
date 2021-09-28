@@ -44,7 +44,12 @@ function RootNavigator() {
             <Stack.Screen
                 name="ChatRoom"
                 component={ChatRoomScreen}
-                options={{ headerShown: true, headerTitleAlign: "center" }}
+                options={{
+                    headerShown: true,
+                    headerTitleAlign: "center",
+                    headerShadowVisible: false,
+                    statusBarStyle: "dark",
+                }}
             />
             <Stack.Screen
                 name="Root"
