@@ -15,7 +15,6 @@ import {
     Platform,
 } from "react-native";
 
-import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 
@@ -49,10 +48,9 @@ function RootNavigator() {
                 name="Home"
                 component={HomeScreen}
                 options={{
-                    headerShown: true,
+                    headerShown: false,
                     headerShadowVisible: false,
                     statusBarStyle: "dark",
-                    header: HomeHeader,
                 }}
             />
             <Stack.Screen
@@ -63,12 +61,8 @@ function RootNavigator() {
                     headerTitleAlign: "center",
                     headerShadowVisible: false,
                     statusBarStyle: "dark",
+                    header: ChatRoomHeader,
                 }}
-            />
-            <Stack.Screen
-                name="NotFound"
-                component={NotFoundScreen}
-                options={{ title: "Oops!" }}
             />
         </Stack.Navigator>
     );
@@ -76,17 +70,8 @@ function RootNavigator() {
 
 let start = 0;
 
-const HomeHeader: FC<NativeStackHeaderProps> = (props) => {
-    const { width } = useWindowDimensions();
-
-    const marginTopCondition = (): number => {
-        if (start == 0 && Platform.OS == "android") {
-            start++;
-            return 28;
-        } else {
-            return 0;
-        }
-    };
+const ChatRoomHeader: FC<NativeStackHeaderProps> = (props) => {
+    if (start <= 1) start++;
 
     return (
         <View
@@ -94,9 +79,8 @@ const HomeHeader: FC<NativeStackHeaderProps> = (props) => {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                backgroundColor: "#fff",
-                marginTop: marginTopCondition(),
-                width: width,
+                marginTop: Platform.OS === "android" ? 28 : 0,
+                width: "100%",
                 padding: 10,
             }}
         >
