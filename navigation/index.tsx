@@ -6,23 +6,13 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import {
-    ColorSchemeName,
-    Text,
-    View,
-    Image,
-    useWindowDimensions,
-    Platform,
-} from "react-native";
+import { ColorSchemeName } from "react-native";
 
-import { RootStackParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 
 import ChatRoomScreen from "../screens/ChatRoomScreen";
 import HomeScreen from "../screens/HomeScreen";
-import { Feather } from "@expo/vector-icons";
-import { FC } from "react";
-import { NativeStackHeaderProps } from "@react-navigation/native-stack/lib/typescript/src/types";
+import { RootStackParamList } from "../types";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     return (
@@ -57,56 +47,11 @@ function RootNavigator() {
                 name="ChatRoom"
                 component={ChatRoomScreen}
                 options={{
-                    headerShown: true,
-                    headerTitleAlign: "center",
+                    headerShown: false,
                     headerShadowVisible: false,
                     statusBarStyle: "dark",
-                    header: ChatRoomHeader,
                 }}
             />
         </Stack.Navigator>
     );
 }
-
-let start = 0;
-
-const ChatRoomHeader: FC<NativeStackHeaderProps> = (props) => {
-    if (start <= 1) start++;
-
-    return (
-        <View
-            style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginTop: Platform.OS === "android" ? 28 : 0,
-                width: "100%",
-                padding: 10,
-            }}
-        >
-            <Image
-                source={{
-                    uri: "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.jpg",
-                }}
-                style={{ width: 30, height: 30, borderRadius: 30 }}
-            />
-            <Text
-                style={{
-                    flex: 1,
-                    textAlign: "center",
-                    marginLeft: 45,
-                    fontWeight: "bold",
-                }}
-            >
-                Signal
-            </Text>
-            <Feather
-                name="camera"
-                size={24}
-                color="black"
-                style={{ marginHorizontal: 10 }}
-            />
-            <Feather name="edit-2" size={24} color="black" style={{ marginLeft: 5 }} />
-        </View>
-    );
-};

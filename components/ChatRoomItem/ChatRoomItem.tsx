@@ -15,7 +15,7 @@ const ChatRoomItem: FC<IProps> = ({ chatRoom }) => {
     const navigation = useNavigation();
 
     const onPress = () => {
-        navigation.navigate("ChatRoom", { id: chatRoom.id });
+        navigation.navigate("ChatRoom", { reciever: chatRoom.users[1] });
     };
 
     return (

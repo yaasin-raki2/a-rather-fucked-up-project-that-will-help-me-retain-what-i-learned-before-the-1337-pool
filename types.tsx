@@ -6,6 +6,7 @@
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { CompositeScreenProps, NavigatorScreenParams } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import ChatRoomModel from "./models/ChatRoomModel";
 
 declare global {
     namespace ReactNavigation {
@@ -14,15 +15,8 @@ declare global {
 }
 
 export type RootStackParamList = {
-    Home: NavigatorScreenParams<RootTabParamList> | undefined;
-    ChatRoom: { id: string } | undefined;
-    NotFound: undefined;
+    Home: undefined;
+    ChatRoom: { reciever: ChatRoomModel["users"][1] };
 };
 
-export type RootTabParamList = {};
-
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
-    CompositeScreenProps<
-        BottomTabScreenProps<RootTabParamList, Screen>,
-        NativeStackScreenProps<RootStackParamList>
-    >;
+export type Props = NativeStackScreenProps<RootStackParamList, "ChatRoom">;
