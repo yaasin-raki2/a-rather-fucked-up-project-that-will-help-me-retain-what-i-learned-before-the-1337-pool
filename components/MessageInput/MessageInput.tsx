@@ -1,20 +1,45 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { View, TextInput, Pressable, KeyboardAvoidingView, Platform } from "react-native";
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 
 import { styles } from "./styles";
+import ChatsModel from "../../models/ChatsModel";
 
-const MessageInput = () => {
+import { Socket } from "../../node_modules/socket.io-client/build";
+import { DefaultEventsMap } from "../../node_modules/socket.io-client/build/typed-events";
+
+interface IProps {
+    stateChanger: any;
+    messages: ChatsModel["messages"];
+    socket: Socket<DefaultEventsMap, DefaultEventsMap>;
+}
+
+const MessageInput: FC<IProps> = ({ stateChanger, messages, socket }) => {
     const [message, setMessage] = useState<string>("");
+    const [mid, setmid] = useState<number>(0);
+    const [userId, setUserId] = useState<Boolean>(false);
 
     const sendMessage = () => {
         //Handle send message
-        console.warn("sending: ", message);
+        const messageObject: ChatsModel["messages"][0] = {
+            content: message,
+            createdAt: new Date().toISOString(),
+            id: userId ? "mu1" + mid.toString() : "mu2" + mid.toString(),
+            user: {
+                id: userId ? "u1" : "u2",
+                name: userId ? "User 1" : "User 2",
+            },
+        };
+        setmid(mid + 1);
+        console.log(mid);
+        stateChanger([...messages, messageObject]);
+        socket.emit("chat", messageObject);
     };
 
     const onPlusPressed = () => {
         //Handle plus press
-        console.warn("plus pressed");
+        console.warn("User Switched");
+        setUserId(!userId);
     };
 
     const onPress = () => {
